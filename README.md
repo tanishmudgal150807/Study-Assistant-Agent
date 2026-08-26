@@ -84,7 +84,7 @@ Total – 60 minutes
 
 ### Study Plan Output
 
-![Study Plan Output](study-plan.png)
+![Study Plan Output](studyplanner.png)
 
 ## How to Run
 
@@ -116,7 +116,7 @@ Study-Assistant-Agent/
 ├── README.md
 ├── study-assistant-agent.json
 ├── workflow.png
-└── studyplanner.png
+└── study-plan.png
 ```
 
 ## Security Note
