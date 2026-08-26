@@ -1,61 +1,130 @@
-# Study-Assistant-Agent
+# Study Assistant Agent
 
-An AI-powered Study Assistant Agent that creates personalized daily study plans and automatically reschedules them when the user's available study time changes.
+An AI-powered Study Assistant Agent built using **n8n and Google Gemini**. It creates personalized daily study plans based on the user's subjects and available time, and automatically reschedules the plan when the available study time changes.
 
 ## Features
 
-- Generates daily study plans
-- Considers available study time
-- Prioritizes subjects
-- Includes study sessions and breaks
-- Remembers the current study plan
-- Automatically reschedules when available time changes
+* Generates personalized daily study plans
+* Considers available study time
+* Prioritizes important subjects
+* Includes study sessions and breaks
+* Remembers the current study plan using Simple Memory
+* Automatically reschedules the plan when available time changes
+* Uses Google Gemini for AI-powered responses
 
 ## Technologies Used
 
-- n8n
-- Google Gemini
-- AI Agent
-- Simple Memory
+* **n8n** – Workflow automation and AI agent platform
+* **Google Gemini** – AI language model
+* **AI Agent** – Generates and adjusts study plans
+* **Simple Memory** – Remembers the current conversation and study plan
 
 ## How It Works
 
-The user enters their subjects and available study time through the n8n chat interface.
+The user interacts with the Study Assistant through the n8n Chat Trigger.
 
-The AI Agent creates a personalized study plan using Google Gemini.
+The AI Agent receives the user's subjects, available time, priorities, and deadlines and generates a suitable study plan.
 
-Simple Memory allows the agent to remember the current study plan and modify it when the user has less available time.
+Simple Memory allows the agent to remember the current study plan during the conversation. If the user later changes their available time, the agent can modify the existing plan accordingly.
 
-### Example
+### Workflow
 
-User:
+```text
+                  ┌──────────────────────┐
+                  │   Gemini Chat Model  │
+                  └──────────┬───────────┘
+                             ↓
+┌─────────────────┐    ┌───────────────┐
+│  Chat Trigger   │ →  │    AI Agent   │
+└─────────────────┘    └───────┬───────┘
+                               ↑
+                       ┌───────┴───────┐
+                       │ Simple Memory │
+                       └───────────────┘
+```
 
-"I need to study DSA, Java and Maths. I have 4 hours today."
+## Example
 
-The agent generates a 4-hour study plan.
+### Initial Request
 
-User:
+**User:**
 
-"I only have 1 hour today. Reschedule my plan."
+> I need to study DSA, Java and Maths. I have 4 hours today.
 
-The agent remembers the subjects and creates a new 1-hour plan.
+**AI Agent:**
 
-## Workflow
+The agent creates a 4-hour study plan with specific sessions, tasks, and breaks.
 
-Chat Trigger → AI Agent → Gemini
+### Rescheduling
 
-Simple Memory is connected to the AI Agent.
+**User:**
+
+> I only have 1 hour today. Reschedule my previous study plan.
+
+**AI Agent:**
+
+The agent remembers the subjects and creates a new 1-hour plan without exceeding the available time.
+
+Example:
+
+```text
+DSA   – 20 minutes
+Java  – 15 minutes
+Break – 5 minutes
+Maths – 20 minutes
+
+Total – 60 minutes
+```
+
+## Screenshots
+
+### n8n Workflow
+
+![n8n Workflow](workflow.png)
+
+### Study Plan Output
+
+![Study Plan Output](study-plan.png)
 
 ## How to Run
 
-1. Open n8n.
+1. Open **n8n**.
 2. Import `study-assistant-agent.json`.
-3. Add your own Google Gemini API credential.
-4. Open the Chat Trigger.
-5. Start chatting with the Study Assistant Agent.
+3. Create or select your own Google Gemini API credential.
+4. Connect the credential to the Google Gemini Chat Model.
+5. Open the Chat Trigger.
+6. Start a chat with the Study Assistant Agent.
+7. Enter your subjects and available study time.
 
-## Sample Inputs
+### Sample Inputs
 
-- I need to study DSA, Java and Maths. I have 4 hours today.
-- I only have 2 hours today. Reschedule my plan.
-- I have an exam tomorrow. Prioritize DSA.
+```text
+I need to study DSA, Java and Maths. I have 4 hours today.
+```
+
+Then test the rescheduling feature:
+
+```text
+I only have 1 hour today. Reschedule my previous study plan.
+```
+
+## Project Structure
+
+```text
+Study-Assistant-Agent/
+│
+├── README.md
+├── study-assistant-agent.json
+├── workflow.png
+└── study-plan.png
+```
+
+## Security Note
+
+The Google Gemini API key should **not** be uploaded to GitHub.
+
+When importing the workflow, users should configure their own Gemini API credential inside n8n.
+
+## Objective
+
+The objective of this project is to demonstrate an AI Agent that can create personalized study schedules and dynamically adapt them when the user's available study time changes.
