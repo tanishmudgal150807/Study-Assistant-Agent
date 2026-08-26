@@ -116,7 +116,7 @@ Study-Assistant-Agent/
 ├── README.md
 ├── study-assistant-agent.json
 ├── workflow.png
-└── study-plan.png
+└── studyplanner.png
 ```
 
 ## Security Note
