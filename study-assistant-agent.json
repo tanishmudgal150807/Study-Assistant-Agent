@@ -1,0 +1,114 @@
+{
+  "name": "Study Assistant Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "9960a3bc-0fa6-49f6-92f3-c8048ac0e918",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "75fa54cc-b2ff-4d44-b1be-4a3099a45f5c"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a Study Assistant Agent.\n\nCreate a daily study plan using the subjects, available time, priorities, and deadlines provided by the user.\n\nAlways remember and use information from the current conversation.\n\nIf the user changes their available time or asks to reschedule, modify the existing study plan instead of creating a completely generic plan.\n\nKeep the same subjects unless the user asks to add or remove subjects.\n\nMake sure the total study time does not exceed the user's available time.\n\nInclude short breaks when appropriate.\n\nGive specific subjects, durations, and tasks.\n\nKeep the response simple, practical, and easy to follow."
+        }
+      },
+      "id": "240cb365-2301-4b0a-8891-f3687c5d73b8",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        224,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.6-flash",
+        "options": {}
+      },
+      "id": "06852d58-159e-42e5-8a5a-49a414063f1d",
+      "name": "Google Gemini Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        96,
+        112
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "E4nv0EAJlTazNPyZ",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        240,
+        96
+      ],
+      "id": "cac98c8b-34bd-4ab4-8e14-dbb6aea55713",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "447cf825-f752-4252-9555-5269aae2e047",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5fa0505d9d8c6e444a4e08b9c80cdf3b42d8d457ed1dc5b97e7bcb5f43e2b10e"
+  },
+  "nodeGroups": [],
+  "id": "EVE1fPXUFmP2R8Gt",
+  "tags": []
+}
